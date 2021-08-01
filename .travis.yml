@@ -1,0 +1,36 @@
+language: generic
+
+# grant privilege super user 
+sudo: required
+
+# tell to use docker service in travis
+services:
+  - docker
+
+# before install build images
+before_install:
+  - docker build -t forderation/docker-react -f Dockerfile.dev .
+
+# CI true to force Jest run in CI-mode 
+script:
+ - docker run -e CI=true forderation/docker-react npm run test
+
+deploy:
+  # provider service
+  provider: elasticbeanstalk
+  # region on aws
+  region: "us-east-1"
+  # app beanstalk name
+  app: "docker-react"
+  # env name on aws
+  env: "Dockerreact-env-1"
+  # bucket name on aws
+  bucket_name: "elasticbeanstalk-us-east-1-446912092089"
+  # bucket path relate to app name
+  bucket_path: "docker-react"
+  # credential
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  # only branch master reuse for deployment
+  on:
+    branch: master
