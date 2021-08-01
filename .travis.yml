@@ -14,3 +14,25 @@ before_install:
 # CI true to force Jest run in CI-mode 
 script:
  - docker run -e CI=true forderation/docker-react npm run test
+
+deploy:
+  # provider service
+  provider: elasticbeanstalk
+  # region on aws
+  region: "us-east-1"
+  # app beanstalk name
+  app: "docker-react"
+  # env name on aws
+  env: "Dockerreact-env-1"
+  # bucket name on aws
+  bucket_name: "elasticbeanstalk-us-east-1-446912092089"
+  # bucket path relate to app name
+  bucket_path: "docker-react"
+  # credential
+  access_key_id: 
+    secure: $AWS_ACCESS_KEY
+  secret_access_key: 
+    secure: $AWS_SECRET_KEY
+  # only branch master reuse for deployment
+  on:
+    branch: master

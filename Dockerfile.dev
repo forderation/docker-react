@@ -3,8 +3,10 @@ FROM node:alpine
 WORKDIR '/app'
 
 COPY package.json .
-# to enable dockerfile
+
+# to enable npm perform on verbose
 # RUN npm install --loglevel verbose
+
 RUN npm install --loglevel verbose
 
 COPY . .
