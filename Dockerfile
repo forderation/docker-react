@@ -15,6 +15,8 @@ RUN npm run build
 # Running phase, just copy result of build without install dependecy
 # to nginx dir
 FROM nginx
+# Allowing port
+EXPOSE 80
 # Copy from builder phase on dir /app/build to running phase
 COPY --from=builder /app/build /usr/share/nginx/html
 # Nginx is start automatically
