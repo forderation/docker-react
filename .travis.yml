@@ -1,3 +1,5 @@
+language: generic
+
 # grant privilege super user 
 sudo: required
 
@@ -9,6 +11,6 @@ services:
 before_install:
   - docker build -t forderation/docker-react -f Dockerfile.dev .
 
-# CI true to force Jest to run in CI-mode 
+# CI true to force Jest run in CI-mode 
 script:
  - docker run -e CI=true forderation/docker-react npm run test
