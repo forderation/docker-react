@@ -3,9 +3,14 @@
 FROM node:alpine as builder
 WORKDIR '/app'
 COPY package.json .
-RUN npm install --dd
+
+RUN npm install
+
+# to enable log verbose
+# RUN npm install --dd
+
 COPY . .
-RUN npm run build --dd
+RUN npm run build
 
 # Running phase, just copy result of build without install dependecy
 # to nginx dir
