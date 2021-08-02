@@ -1,6 +1,6 @@
 language: generic
 
-# grant privilege super user 
+# grant privilege super user
 sudo: required
 
 # tell to use docker service in travis
@@ -11,9 +11,9 @@ services:
 before_install:
   - docker build -t forderation/docker-react -f Dockerfile.dev .
 
-# CI true to force Jest run in CI-mode 
+# CI true to force Jest run in CI-mode
 script:
- - docker run -e CI=true forderation/docker-react npm run test
+  - docker run -e CI=true forderation/docker-react npm run test
 
 # deploy:
 #   # provider service
@@ -35,22 +35,19 @@ script:
 #   on:
 #     branch: master
 
+# custom deploy settings
 deploy:
   edge:
-    source: 'native-api/dpl'
-    branch: 'ebs_session_token'
+    source: "native-api/dpl"
+    branch: "ebs_session_token"
   provider: elasticbeanstalk
   region: "us-east-1"
-  app: jeff-docker-react
-  env: Jeffdockerreact-env
-# To find bucket_name, search S3 buckets, look for "elasticbeanstalk"  
-# Every time you update this codebase you need to grab temporary credentials (~/.aws/credentials)
-#  and update env variables in the Travis CI repo Settings:
-#  (AWS_ACCESS_KEY,AWS_SECRET_KEY,AWS_SESSION_TOKEN) 
-  bucket_name: "elasticbeanstalk-us-east-1-1234567890"
-  bucket_path: "jeff-docker-react"
+  app: "docker-react"
+  env: "Dockerreact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-446912092089"
+  bucket_path: "docker-react"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: "$AWS_SECRET_KEY"
-  session_token: "$AWS_SESSION_TOKEN"
+  secret_access_key: $AWS_SECRET_KEY
+  session_token: $AWS_SESSION_TOKEN
