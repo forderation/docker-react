@@ -15,22 +15,42 @@ before_install:
 script:
  - docker run -e CI=true forderation/docker-react npm run test
 
+# deploy:
+#   # provider service
+#   provider: elasticbeanstalk
+#   # region on aws
+#   region: "us-east-1"
+#   # app beanstalk name
+#   app: "docker-react"
+#   # env name on aws
+#   env: "Dockerreact-env-1"
+#   # bucket name on aws
+#   bucket_name: "elasticbeanstalk-us-east-1-446912092089"
+#   # bucket path relate to app name
+#   bucket_path: "docker-react"
+#   # credential
+#   access_key_id: "ASIAWQDQJK644YRZU3N6"
+#   secret_access_key: "6kUTjNtBpPzAgULk3jEfQlxJ997OTIGcjOus0ZE3"
+#   # only branch master reuse for deployment
+#   on:
+#     branch: master
+
 deploy:
-  # provider service
+  edge:
+    source: 'native-api/dpl'
+    branch: 'ebs_session_token'
   provider: elasticbeanstalk
-  # region on aws
   region: "us-east-1"
-  # app beanstalk name
-  app: "docker-react"
-  # env name on aws
-  env: "Dockerreact-env-1"
-  # bucket name on aws
-  bucket_name: "elasticbeanstalk-us-east-1-446912092089"
-  # bucket path relate to app name
-  bucket_path: "docker-react"
-  # credential
-  access_key_id: "ASIAWQDQJK644YRZU3N6"
-  secret_access_key: "6kUTjNtBpPzAgULk3jEfQlxJ997OTIGcjOus0ZE3"
-  # only branch master reuse for deployment
+  app: jeff-docker-react
+  env: Jeffdockerreact-env
+# To find bucket_name, search S3 buckets, look for "elasticbeanstalk"  
+# Every time you update this codebase you need to grab temporary credentials (~/.aws/credentials)
+#  and update env variables in the Travis CI repo Settings:
+#  (AWS_ACCESS_KEY,AWS_SECRET_KEY,AWS_SESSION_TOKEN) 
+  bucket_name: "elasticbeanstalk-us-east-1-1234567890"
+  bucket_path: "jeff-docker-react"
   on:
     branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
+  session_token: "$AWS_SESSION_TOKEN"
